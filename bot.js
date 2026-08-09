@@ -71,7 +71,7 @@ const embed = new EmbedBuilder()
       //})
       .setTitle(ep.animeTitle)
       .setDescription(
-        `**${ep.season}. Sezon ${ep.episode}. Bölüm yayında!** -Kaçırma, hemen izle!`
+        `**${ep.season}. Sezon ${ep.episode}. Bölüm yayında!** -Kaçırma, hemen izle!<:276933yippeee:1535684901893050399>`
       )
       .setImage((info && info.cover) || ep.thumbnail)
       .setFooter({
@@ -82,15 +82,15 @@ const embed = new EmbedBuilder()
 
     if (info) {
       if (info.description) {
-        embed.addFields({ name: 'Konu', value: info.description });
+        embed.addFields({ name: '__Konu__', value: info.description });
       }
       embed.addFields(
-        { name: 'Yıl', value: info.year || 'Bilinmiyor', inline: true },
-        { name: 'Puan', value: info.score ? `⭐ ${info.score}` : 'Bilinmiyor', inline: true },
-        { name: 'Kanal', value: info.studio || 'Bilinmiyor', inline: true }
+        { name: '__Yıl__', value: info.year || 'Bilinmiyor', inline: true },
+        { name: '__Puan__', value: info.score ? `⭐ ${info.score}` : 'Bilinmiyor', inline: true },
+        { name: '__Kanal__', value: info.studio || 'Bilinmiyor', inline: true }
       );
       if (info.genres.length > 0) {
-        embed.addFields({ name: 'Tür', value: info.genres.join(', ') });
+        embed.addFields({ name: '__Tür__', value: info.genres.join(', ') });
       }
     }
 
