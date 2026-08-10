@@ -5,7 +5,7 @@
 [![status](https://img.shields.io/badge/status-aktif-brightgreen)]()
 [![license](https://img.shields.io/badge/license-private-lightgrey)]()
 
-LeoSubs sitesini gözünü kırpmadan izleyen, yeni bölüm çıkar çıkmaz Discord'a haber salan bir bekçi. Sıkıcı sayfa yenilemelerini bota bıraktık, biz sadece bildirimi görüp tıklıyoruz.
+[LeoSubs](https://leosubs.co) sitesini gözünü kırpmadan izleyen, yeni bölüm çıkar çıkmaz Discord'a haber salan bir bekçi. Sıkıcı sayfa yenilemelerini bota bıraktık, biz sadece bildirimi görüp tıklıyoruz.
 
 ---
 
@@ -14,7 +14,7 @@ LeoSubs sitesini gözünü kırpmadan izleyen, yeni bölüm çıkar çıkmaz Dis
 - Siteyi belirli aralıklarla dolaşır, yeni bölüm var mı diye kontrol eder
 - Daha önce gördüğü bölümleri unutmaz, aynı şeyi iki kere söylemez
 - Yeni bir bölüm yakaladığında animenin kendi sayfasına uğrar, kaliteli kapak resmini ve yıl/puan/kanal/tür/konu gibi detayları toplayıp getirir
-- Hepsini tek bir şık kartta, "Hemen Oku" butonuyla birlikte kanala bırakır
+- Hepsini tek bir şık kartta, "Hemen Izle" butonuyla birlikte kanala bırakır
 - İstenirse belirli bir rolü de etiketleyip herkese haber verir
 - Kendi nabzını tutar — site bir süre cevap vermezse haber verir, düzelince de öyle
 - `/ping` yazınca botun uyanık olup olmadığını anında söyler
@@ -45,4 +45,12 @@ leosubs-bot/
 
 ## Not
 
-Bu bot yalnızca LeoSubs sitesinin herkese açık "Yeni Bölümler" sayfasını okur, hiçbir içeriği kopyalamaz veya yeniden yayınlamaz — sadece "yeni bölüm çıktı" bilgisini Discord'a taşır. Site sahibiyle bir bağlantısı yoktur, resmi bir ürün değildir. Geliştirilmeye açıktır.
+Bu bot yalnızca LeoSubs sitesinin herkese açık "Yeni Bölümler" sayfasını okur, hiçbir içeriği kopyalamaz veya yeniden yayınlamaz — sadece "yeni bölüm çıktı" bilgisini Discord'a taşır. Site sahibiyle bir bağlantısı yoktur, resmi bir ürün değildir. Kişisel kullanım içindir.
+
+## Kaynaklar
+
+- [node.js](https://nodejs.org)
+- [discord.js](https://discord.js.org)
+- [axios](https://axios-http.com)
+- [cheerio](https://cheerio.js.org)
+- [dotenv](https://www.dotenv.org)
