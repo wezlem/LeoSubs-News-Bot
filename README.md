@@ -5,7 +5,7 @@
 [![status](https://img.shields.io/badge/status-aktif-brightgreen)]()
 [![license](https://img.shields.io/badge/license-private-lightgrey)]()
 
-LeoSubs sitesini gözünü kırpmadan izleyen, yeni bölüm çıkar çıkmaz Discord'a haber salan bir bekçi. Sıkıcı sayfa yenilemelerini bota bıraktık, biz sadece bildirimi görüp tıklıyoruz.
+[LeoSubs](https://leosubs.co) sitesini gözünü kırpmadan izleyen, yeni bölüm çıkar çıkmaz Discord'a haber salan bir bekçi. Sıkıcı sayfa yenilemelerini bota bıraktık, biz sadece bildirimi görüp tıklıyoruz.
 
 ---
 
@@ -46,3 +46,11 @@ leosubs-bot/
 ## Not
 
 Bu bot yalnızca LeoSubs sitesinin herkese açık "Yeni Bölümler" sayfasını okur, hiçbir içeriği kopyalamaz veya yeniden yayınlamaz — sadece "yeni bölüm çıktı" bilgisini Discord'a taşır. Site sahibiyle bir bağlantısı yoktur, resmi bir ürün değildir. Kişisel kullanım içindir.
+
+## Kaynaklar
+
+- [node.js](https://nodejs.org)
+- [discord.js](https://discord.js.org)
+- [axios](https://axios-http.com)
+- [cheerio](https://cheerio.js.org)
+- [dotenv](https://www.dotenv.org)
