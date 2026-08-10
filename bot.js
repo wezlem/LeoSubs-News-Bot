@@ -29,6 +29,8 @@ async function runCheck() {
     return;
   }
 
+  status.scanCount = (status.scanCount || 0) + 1;
+
   if (status.consecutiveErrors >= 3 && status.ownerNotifiedOfError) {
     const owner = await client.users.fetch(process.env.OWNER_ID);
     await owner.send('✅ LeoSubs botu tekrar düzgün çalışıyor.');
@@ -50,7 +52,7 @@ async function runCheck() {
   }
 
   if (newEpisodes.length === 0) {
-    console.log('Yeni bölüm yok.');
+    console.log(`Site tarandı, yeni bölüm yok. (Tarama #${status.scanCount})`);
     return;
   }
 
