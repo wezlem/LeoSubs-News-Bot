@@ -45,7 +45,7 @@ leosubs-bot/
 
 ## Not
 
-Bu bot yalnızca LeoSubs sitesinin herkese açık "Yeni Bölümler" sayfasını okur, hiçbir içeriği kopyalamaz veya yeniden yayınlamaz — sadece "yeni bölüm çıktı" bilgisini Discord'a taşır. Site sahibiyle bir bağlantısı yoktur, resmi bir ürün değildir. Kişisel kullanım içindir.
+Bu bot yalnızca LeoSubs sitesinin herkese açık "Yeni Bölümler" sayfasını okur, hiçbir içeriği kopyalamaz veya yeniden yayınlamaz — sadece "yeni bölüm çıktı" bilgisini Discord'a taşır. Site sahibiyle bir bağlantısı yoktur, resmi bir ürün değildir. __**Site sahibi onaylıdır ve Leosubs Discord sunucusunda aktif bir şekilde kullanılmaktadır.**__
 
 ## Kaynaklar
 
