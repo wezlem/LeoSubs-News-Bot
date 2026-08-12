@@ -42,7 +42,7 @@ async function runCheck() {
   saveStatus(status);;
 
   const seen = loadSeen();
-  const newEpisodes = episodes.filter((ep) => !seen.keys.has(ep.key));
+  const newEpisodes = episodes.filter((ep) => !seen.keys.has(ep.key)).reverse();
 
   if (!seen.existedBefore) {
     episodes.forEach((ep) => seen.keys.add(ep.key));
