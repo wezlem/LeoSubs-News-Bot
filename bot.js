@@ -73,7 +73,7 @@ const embed = new EmbedBuilder()
       //})
       .setTitle(ep.animeTitle)
       .setDescription(
-        `**${ep.season}. Sezon ${ep.episode}. Bölüm yayında!** -Kaçırma, hemen izle!<:276933yippeee:1535684901893050399>`
+        `**${ep.season}. Sezon ${ep.episode}. Bölüm yayında!** -İyi seyirler dileriz!<:leoemoji:1537035239732543550>`
       )
       .setImage((info && info.cover) || ep.thumbnail)
       .setFooter({
@@ -89,7 +89,7 @@ const embed = new EmbedBuilder()
       embed.addFields(
         { name: '__Yıl__', value: info.year || 'Bilinmiyor', inline: true },
         { name: '__Puan__', value: info.score ? `⭐ ${info.score}` : 'Bilinmiyor', inline: true },
-        { name: '__Kanal__', value: info.studio || 'Bilinmiyor', inline: true }
+        { name: '__Studio__', value: info.studio || 'Bilinmiyor', inline: true }
       );
       if (info.genres.length > 0) {
         embed.addFields({ name: '__Tür__', value: info.genres.join(', ') });
