@@ -27,6 +27,7 @@
 | axios | Siteye gidip HTML'i getirmek |
 | cheerio | Getirilen HTML'i eleyip lazım olanı bulmak |
 | dotenv | Token gibi hassas bilgileri kodun dışında tutmak |
+| pm2 | Botu sunucuda kesintisiz, arka planda ayakta tutmak |
 
 ## Klasörde neler var
 
@@ -54,3 +55,4 @@ Bu bot yalnızca LeoSubs sitesinin herkese açık "Yeni Bölümler" sayfasını 
 - [axios](https://axios-http.com)
 - [cheerio](https://cheerio.js.org)
 - [dotenv](https://www.dotenv.org)
+- [pm2](https://pm2.keymetrics.io)
