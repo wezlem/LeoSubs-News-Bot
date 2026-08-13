@@ -75,8 +75,8 @@ const embed = new EmbedBuilder()
       //})
       .setTitle(ep.animeTitle)
       .setDescription(
-        `**${ep.season}. Sezon ${ep.episode}. Bölüm yayında!** -İyi seyirler dileriz!<:leoemoji:1537035239732543550>`
-      )
+  `**${ep.season}. Sezon ${ep.episode}. Bölüm yayında!** -İyi seyirler dileriz!<:leoemoji:1537035239732543550>`
+)
       .setImage((info && info.cover) || ep.thumbnail)
       .setFooter({
         text: 'LeoSubs ⭐ • Yeni bölüm',
@@ -85,22 +85,31 @@ const embed = new EmbedBuilder()
       .setTimestamp();
 
     if (info) {
+      if (episodeCredits?.episodeTitle) {
+  embed.addFields({ name: '__Bölüm Adı__', value: `*${episodeCredits.episodeTitle}*` });
+}
       if (info.description) {
         embed.addFields({ name: '__Konu__', value: info.description });
       }
       embed.addFields(
         { name: '__Yıl__', value: info.year || 'Bilinmiyor', inline: true },
         { name: '__Puan__', value: info.score ? `⭐ ${info.score}` : 'Bilinmiyor', inline: true },
-        { name: '__Studio__', value: info.studio || 'Bilinmiyor', inline: true }
+        { name: '__Stüdyo__', value: info.studio || 'Bilinmiyor', inline: true }
       );
       if (info.genres.length > 0) {
         embed.addFields({ name: '__Tür__', value: info.genres.join(', ') });
       }
 
+  const creditParts = [];
+if (episodeCredits?.translator) creditParts.push(`Çevirmen: ${resolveCredit(episodeCredits.translator)}`);
+if (episodeCredits?.editor) creditParts.push(`Redaktör: ${resolveCredit(episodeCredits.editor)}`);
+
+if (creditParts.length > 0) {
   embed.addFields({
     name: '\u200b',
-    value: `Çevirmen: ${resolveCredit(episodeCredits?.translator)}, Redaktör: ${resolveCredit(episodeCredits?.editor)}`,
+    value: creditParts.join(' & '),
   });
+}
 
     }
 

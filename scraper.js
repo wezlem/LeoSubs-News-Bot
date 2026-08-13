@@ -100,7 +100,14 @@ async function fetchEpisodeCredits(url) {
       if (role === 'Redaktör') editor = name;
     });
 
-    return { translator, editor };
+    let episodeTitle = null;
+    const activeEpisode = $('.episodes-list-container a.episode-item.active');
+    if (activeEpisode.length) {
+      const title = activeEpisode.find('.episode-title-row').text().trim();
+      if (title) episodeTitle = title;
+    }
+
+    return { translator, editor, episodeTitle };
   } catch {
     return null;
   }
