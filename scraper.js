@@ -77,4 +77,33 @@ async function fetchAnimeInfo(slug) {
   }
 }
 
-module.exports = { fetchLatestEpisodes, fetchAnimeInfo, BASE_URL };
+async function fetchEpisodeCredits(url) {
+  try {
+    const { data: html } = await axios.get(url, {
+      timeout: 15000,
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+      },
+    });
+    const $ = cheerio.load(html);
+
+    let translator = null;
+    let editor = null;
+
+    $('.credits-box .credit-item').each((_, el) => {
+      const item = $(el);
+      const role = item.find('.credit-role').text().trim();
+      const name = item.find('span').last().text().trim();
+
+      if (role === 'Çevirmen') translator = name;
+      if (role === 'Redaktör') editor = name;
+    });
+
+    return { translator, editor };
+  } catch {
+    return null;
+  }
+}
+
+module.exports = { fetchLatestEpisodes, fetchAnimeInfo, fetchEpisodeCredits, BASE_URL };

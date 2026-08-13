@@ -1,8 +1,9 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require('discord.js');
-const { fetchLatestEpisodes, fetchAnimeInfo } = require('./scraper');
+const { fetchLatestEpisodes, fetchAnimeInfo, fetchEpisodeCredits } = require('./scraper');
 const { loadSeen, saveSeen } = require('./storage');
 const { loadStatus, saveStatus } = require('./status');
+const creditsMap = require('./credits.json');
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
@@ -61,6 +62,7 @@ async function runCheck() {
   for (const ep of newEpisodes) {
 
     const info = await fetchAnimeInfo(ep.slug);
+    const episodeCredits = await fetchEpisodeCredits(ep.url);
 
     const seasonText = ep.seasonLabel.replace(/[()]/g, '');
 
@@ -94,6 +96,12 @@ const embed = new EmbedBuilder()
       if (info.genres.length > 0) {
         embed.addFields({ name: '__Tür__', value: info.genres.join(', ') });
       }
+
+  embed.addFields({
+    name: '\u200b',
+    value: `Çevirmen: ${resolveCredit(episodeCredits?.translator)}, Redaktör: ${resolveCredit(episodeCredits?.editor)}`,
+  });
+
     }
 
     const button = new ActionRowBuilder().addComponents(
@@ -110,6 +118,16 @@ const embed = new EmbedBuilder()
 
   saveSeen(seen.keys);
   console.log(`${newEpisodes.length} yeni bölüm bildirildi.`);
+}
+
+function resolveCredit(name) {
+  if (!name) return 'Bilinmiyor';
+
+  const key = Object.keys(creditsMap).find(
+    (k) => k.toLowerCase().trim() === name.toLowerCase().trim()
+  );
+
+  return key ? `<@${creditsMap[key]}>` : name;
 }
 
 client.once('clientReady', () => {
