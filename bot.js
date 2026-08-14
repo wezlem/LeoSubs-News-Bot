@@ -144,7 +144,8 @@ client.on('interactionCreate', async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
   if (interaction.commandName !== 'ping') return;
 
-  const sent = await interaction.reply({ content: 'Ping hesaplaniyor...', fetchReply: true });
+  await interaction.reply({ content: 'Ping hesaplaniyor...' });
+  const sent = await interaction.fetchReply();
   const gecikme = sent.createdTimestamp - interaction.createdTimestamp;
 
   await interaction.editReply(`🏓 Pong! Gecikme: **${gecikme}ms** | API: **${Math.round(client.ws.ping)}ms**`);
