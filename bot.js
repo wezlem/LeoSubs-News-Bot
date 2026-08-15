@@ -1,9 +1,9 @@
 require('dotenv').config();
-const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const { fetchLatestEpisodes, fetchAnimeInfo, fetchEpisodeCredits } = require('./scraper');
-const { loadSeen, saveSeen } = require('./storage');
-const { loadStatus, saveStatus } = require('./status');
-const creditsMap = require('./credits.json');
+const { loadSeen, saveSeen } = require('./data/storage');
+const { loadStatus, saveStatus } = require('./data/status');
+const creditsMap = require('./data/credits.json');
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
@@ -141,14 +141,86 @@ function resolveCredit(name) {
 
 client.once('clientReady', () => {
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
-  if (interaction.commandName !== 'ping') return;
+  if (interaction.isChatInputCommand() && interaction.commandName === 'ping') {
+    const sent = await interaction.reply({ content: 'Ping hesaplaniyor...' });
+    const sentReply = await interaction.fetchReply();
+    const gecikme = sentReply.createdTimestamp - interaction.createdTimestamp;
 
-  await interaction.reply({ content: 'Ping hesaplaniyor...' });
-  const sent = await interaction.fetchReply();
-  const gecikme = sent.createdTimestamp - interaction.createdTimestamp;
+    await interaction.editReply(`🏓 Pong! Gecikme: **${gecikme}ms** | API: **${Math.round(client.ws.ping)}ms**`);
+    return;
+  }
 
-  await interaction.editReply(`🏓 Pong! Gecikme: **${gecikme}ms** | API: **${Math.round(client.ws.ping)}ms**`);
+  if (interaction.isChatInputCommand() && interaction.commandName === 'embed-olustur') {
+    const secilenRol = interaction.options.getRole('rol');
+
+    const modal = new ModalBuilder()
+      .setCustomId(`embedModal_${secilenRol ? secilenRol.id : 'none'}`)
+      .setTitle('Embed Oluştur');
+
+    const baslikInput = new TextInputBuilder()
+      .setCustomId('baslik')
+      .setLabel('Başlık')
+      .setStyle(TextInputStyle.Short)
+      .setRequired(true);
+
+    const aciklamaInput = new TextInputBuilder()
+      .setCustomId('aciklama')
+      .setLabel('Açıklama')
+      .setStyle(TextInputStyle.Paragraph)
+      .setRequired(true);
+
+    const renkInput = new TextInputBuilder()
+      .setCustomId('renk')
+      .setLabel('Renk (hex kod, örn: FF0000)')
+      .setStyle(TextInputStyle.Short)
+      .setRequired(false);
+
+    const resimInput = new TextInputBuilder()
+      .setCustomId('resim')
+      .setLabel('Resim linki')
+      .setStyle(TextInputStyle.Short)
+      .setRequired(false);
+
+    const footerInput = new TextInputBuilder()
+      .setCustomId('footer')
+      .setLabel('Footer metni')
+      .setStyle(TextInputStyle.Short)
+      .setRequired(false);
+
+    modal.addComponents(
+      new ActionRowBuilder().addComponents(baslikInput),
+      new ActionRowBuilder().addComponents(aciklamaInput),
+      new ActionRowBuilder().addComponents(renkInput),
+      new ActionRowBuilder().addComponents(resimInput),
+      new ActionRowBuilder().addComponents(footerInput),
+    );
+
+    await interaction.showModal(modal);
+    return;
+  }
+
+  if (interaction.isModalSubmit() && interaction.customId.startsWith('embedModal_')) {
+  const rolId = interaction.customId.split('_')[1];
+  const rolMetni = rolId !== 'none' ? (rolId === interaction.guild.id ? '@everyone ' : `<@&${rolId}> `) : '';
+  const baslik = interaction.fields.getTextInputValue('baslik');
+  const aciklama = interaction.fields.getTextInputValue('aciklama');
+  const renk = interaction.fields.getTextInputValue('renk');
+  const resim = interaction.fields.getTextInputValue('resim');
+  const footer = interaction.fields.getTextInputValue('footer');
+
+  const embed = new EmbedBuilder()
+    .setTitle(baslik)
+    .setDescription(aciklama);
+
+  if (renk) embed.setColor(`#${renk.replace('#', '')}`);
+  if (resim) embed.setImage(resim);
+  if (footer) embed.setFooter({ text: footer });
+  embed.setTimestamp();
+
+  await interaction.channel.send({ content: rolMetni || undefined, embeds: [embed] });
+  await interaction.reply({ content: 'Embed gönderildi!', ephemeral: true });
+}
+
 });
   console.log(`Giriş yapıldı: ${client.user.tag}`);
   client.user.setActivity('leosubs.co', { type: ActivityType.Watching });
