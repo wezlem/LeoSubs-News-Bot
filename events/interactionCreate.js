@@ -1,9 +1,13 @@
 const pingCommand = require('../commands/ping');
 const embedOlusturCommand = require('../commands/embed-olustur');
+const voiceBaglanCommand = require('../commands/voice-baglan');
+const voiceAyrilCommand = require('../commands/voice-ayril');
 
 const commands = {
   [pingCommand.name]: pingCommand,
   [embedOlusturCommand.name]: embedOlusturCommand,
+  [voiceBaglanCommand.name]: voiceBaglanCommand,
+  [voiceAyrilCommand.name]: voiceAyrilCommand,
 };
 
 module.exports = {
