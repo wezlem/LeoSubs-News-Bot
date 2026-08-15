@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const { fetchLatestEpisodes, fetchAnimeInfo, fetchEpisodeCredits } = require('./scraper');
+const { fetchLatestEpisodes, fetchAnimeInfo, fetchEpisodeCredits } = require('./services/scraper');
 const { loadSeen, saveSeen } = require('./data/storage');
 const { loadStatus, saveStatus } = require('./data/status');
 const creditsMap = require('./data/credits.json');
