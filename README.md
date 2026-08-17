@@ -7,59 +7,50 @@
 
 [LeoSubs](https://leosubs.co) topluluğu için geliştirilmiş bir Discord botu. Şu an ağırlıklı olarak yeni bölüm bildirimleriyle çalışıyor, ileride farklı özelliklerle büyütülmesi planlanıyor.
 
----
+# LeoSubs Bildirim Botu
 
-## Bu bot ne iş yapar
+[leosubs.co](https://leosubs.co)'yu düzenli aralıklarla kontrol edip yeni bölüm çıktığında haber veren bir Discord botu. Siteyi elle yenileyip bakmak yerine bu işi bota bıraktık.
 
-- Belirli araliklarla siteyi kontrol edip yeni bölüm çıkıp çıkmadığına bakar
-- Yeni bölüm bulunca kapak resmi, yıl, puan, stüdyo, tür ve konu bilgisiyle birlikte bir embed hazırlar
-- Bölümün adını ve varsa çevirmen/redaktör bilgisini de ekler
-- "Hemen İzle" butonuyla direkt bölüme yönlendirir
-- Ayarlandıysa belirli bir rolü etiketleyip herkese bildirim atar
-- Site 3 kez üst üste cevap vermezse sahibine DM ile haber verir, sorun düzelince tekrar haber verir
-- `/ping` komutuyla botun gecikmesini gösterir
+## Ne yapıyor
 
+- Siteyi düzenli olarak tarar, yeni bölüm var mı diye bakar
+- Daha önce gördüğü bölümleri hatırlar, aynısını iki kez bildirmez
+- Yeni bir bölüm bulunca kapak resmi, yıl, puan, kanal, tür, isim ve konu gibi bilgileri çekip düzgün bir embed olarak kanala atar
+- İstenirse belirli bir rolü etiketleyip herkese haber verir
+- Site bir süre cevap vermezse bunu fark edip sahibine DM atar
 
-## Nasıl çalışıyor
+## Komutlar
 
-LeoSubs'ın resmi bir API'si yok, o yüzden bot siteyi kendisi ziyaret edip sayfayı okuyor ve ihtiyacı olan veriyi (bölüm bilgileri, kapak resmi, çevirmen/redaktör vb.) oradan çıkarıyor. Daha önce bildirdiği bölümleri hatırlıyor, her kontrolde sadece yeni olanları bildiriyor.
+- `/ping` — botun uyanık olup olmadığını ve gecikmesini gösterir
+- `/embed-olustur` — herhangi bir embed mesajı oluşturup göndermek için (herhangi bir amaç için)
+- `/voice-baglan`, `/voice-ayril` — botu sabit bir ses kanalına sokup çıkarmak için
 
-
-## Ne ile ayakta duruyor
-
-| Araç | Görevi |
-|---|---|
-| discord.js | Discord tarafındaki her şey |
-| axios | Siteye gidip HTML'i getirmek |
-| cheerio | Getirilen HTML'i eleyip lazım olanı bulmak |
-| dotenv | Token gibi hassas bilgileri kodun dışında tutmak |
-| pm2 | Botu sunucuda kesintisiz, arka planda ayakta tutmak |
-
-## Klasörde neler var
+## Klasör yapısı
 
 ```
-leosubs-bot/
-├── bot.js → botun kalbi, her şey burada birleşiyor
-├── deploy-commands.js → /ping komutunu Discord'a tanıtan script
-├── scraper.js → siteyi okuyup veri çıkaran kısım
-├── storage.js → hafıza yönetimi
-├── status.js → sağlık kaydı yönetimi
-├── seen.json → görülen bölümler (kendiliğinden oluşur, paylaşılmaz)
-├── status.json → sağlık verisi (kendiliğinden oluşur, paylaşılmaz)
-├── credits.json → çevirmen/redaktör isim eşleştirmesi (kendiliğinden oluşmaz, elle tutulur, paylaşılmaz)
-├── .env → gizli ayarlar (paylaşılmaz)
-└── .gitignore
+├── bot.js                    → botu çalıştıran ana dosya
+├── deploy-commands.js         → slash komutlarını Discord'a tanıtan script
+├── package.json
+├── commands/
+│   ├── ping.js                → /ping komutu
+│   ├── embed-olustur.js        → /embed-olustur komutu
+│   ├── voice-baglan.js         → /voice-baglan komutu
+│   └── voice-ayril.js          → /voice-ayril komutu
+├── events/
+│   ├── ready.js                → bot açıldığında çalışır, taramayı başlatır
+│   └── interactionCreate.js    → slash komutlarını algılayıp yönlendirir
+├── services/
+│   ├── scraper.js              → siteyi okuyup veri çıkaran kısım
+│   └── notifier.js             → yeni bölüm bulunca kanala bildirim gönderir
+└── data/
+    ├── storage.js               → görülen bölümleri hafızada tutar
+    └── status.js                → botun sağlık durumunu takip eder
 ```
+
+## Kullanılanlar
+
+discord.js, axios, cheerio, dotenv, pm2 — Node.js .
 
 ## Not
 
-Bu bot LeoSubs sitesinin herkese açık "Yeni Bölümler" sayfasını okur, hiçbir içeriği kopyalamaz veya yeniden yayınlamaz — sadece "yeni bölüm çıktı" bilgisini Discord'a taşır. Site sahibiyle resmi bir bağlantısı yoktur, resmi bir ürün değildir. __**Site sahibi onaylıdır ve Leosubs Discord sunucusunda aktif bir şekilde kullanılmaktadır.**__
-
-## Kaynaklar
-
-- [node.js](https://nodejs.org)
-- [discord.js](https://discord.js.org)
-- [axios](https://axios-http.com)
-- [cheerio](https://cheerio.js.org)
-- [dotenv](https://www.dotenv.org)
-- [pm2](https://pm2.keymetrics.io)
+Bot sadece leosubs.co'nun herkese açık "yeni bölümler" sayfasını okuyor, hiçbir içeriği kopyalamıyor ya da yeniden yayınlamıyor. Sadece "yeni bölüm çıktı" bilgisini alıp Discord'a taşıyor. Site sahibiyle resmi bir bağlantısı yok.
